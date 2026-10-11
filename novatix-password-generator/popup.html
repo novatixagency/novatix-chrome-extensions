@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Novatix Secure Password Generator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="hdr">
+    <span class="hdr-icon" aria-hidden="true">&#128273;</span>
+    <div>
+      <h1>Secure Password Generator</h1>
+      <p>Cryptographically secure &middot; 100% offline</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- Length -->
+    <section class="card">
+      <div class="row-between mb-2">
+        <label for="lenSlider" class="lbl">Password length</label>
+        <span id="lenValue" class="len-badge">20 chars</span>
+      </div>
+      <input id="lenSlider" type="range" min="8" max="64" step="1" value="20" aria-label="Password length (8 to 64)">
+      <div class="row-between ticks"><span>8</span><span>64</span></div>
+    </section>
+
+    <!-- Character set toggles -->
+    <section class="card toggles">
+      <button type="button" class="toggle" id="tgl-upper" role="switch" aria-checked="true">
+        <span class="toggle-text"><span class="toggle-label">Uppercase (A&ndash;Z)</span></span>
+        <span class="switch" aria-hidden="true"><span class="knob"></span></span>
+      </button>
+      <button type="button" class="toggle" id="tgl-lower" role="switch" aria-checked="true">
+        <span class="toggle-text"><span class="toggle-label">Lowercase (a&ndash;z)</span></span>
+        <span class="switch" aria-hidden="true"><span class="knob"></span></span>
+      </button>
+      <button type="button" class="toggle" id="tgl-digits" role="switch" aria-checked="true">
+        <span class="toggle-text"><span class="toggle-label">Numbers (0&ndash;9)</span></span>
+        <span class="switch" aria-hidden="true"><span class="knob"></span></span>
+      </button>
+      <button type="button" class="toggle" id="tgl-symbols" role="switch" aria-checked="true">
+        <span class="toggle-text"><span class="toggle-label">Symbols (!@#$&hellip;)</span></span>
+        <span class="switch" aria-hidden="true"><span class="knob"></span></span>
+      </button>
+      <button type="button" class="toggle" id="tgl-exclude" role="switch" aria-checked="false">
+        <span class="toggle-text">
+          <span class="toggle-label">Exclude ambiguous characters</span>
+          <span class="toggle-hint">0 / O &middot; 1 / l / I &mdash; avoids misreads when typing</span>
+        </span>
+        <span class="switch" aria-hidden="true"><span class="knob"></span></span>
+      </button>
+    </section>
+
+    <!-- Strength meter -->
+    <section class="card">
+      <div class="row-between mb-2">
+        <span class="section-tag">Strength</span>
+        <span id="strengthLabel" class="strength-label">&mdash;</span>
+      </div>
+      <div class="meter"><div id="strengthBar" class="meter-fill"></div></div>
+      <div class="row-between meta">
+        <span>Entropy: <strong id="entropyBits" class="mono">0.0 bits</strong></span>
+        <span>Pool: <strong id="poolSizeText" class="mono">0</strong></span>
+      </div>
+      <p class="meta crack">Estimated time to crack: <strong id="crackText" class="mono">&mdash;</strong>
+        <span class="dim">(rough estimate)</span></p>
+    </section>
+
+    <div id="errorBox" class="error hidden" role="alert"></div>
+
+    <button type="button" id="generateBtn" class="generate-btn">&#8635;&nbsp; Generate Password</button>
+    <p class="secure-note">&#128274; Generated locally with crypto.getRandomValues &mdash; never sent to any server.</p>
+
+    <!-- Current result -->
+    <section id="resultCard" class="card hidden">
+      <span class="section-tag">Generated password</span>
+      <div class="pw-row">
+        <span id="currentPw" class="pw mono"></span>
+        <button type="button" id="copyCurrentBtn" class="copy-btn" aria-label="Copy password">&#128203;</button>
+      </div>
+    </section>
+
+    <!-- History -->
+    <section id="historyCard" class="card hidden">
+      <span class="section-tag">History (last 5)</span>
+      <div id="historyList" class="history"></div>
+    </section>
+  </main>
+
+  <footer>
+    <a href="https://novatix.agency/tools/" target="_blank" rel="noopener">More free tools &rarr;</a>
+    <span class="dim">by Novatix Agency</span>
+  </footer>
+
+  <script src="popup.js"></script>
+</body>
+</html>
